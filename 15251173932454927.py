@@ -24,7 +24,7 @@ def calculate_sorted_averages(input_file_name, output_file_name):
             grades_int_list = [int(str_num) for str_num in grades_str_list]
 
             sorted_list.append([item[0], float(mean(grades_int_list))])
-    sorted_list2 = sorted(sorted_list, key=lambda x: x[1])
+    sorted_list2 = sorted(sorted_list, key=lambda x: (x[1], x[0]))
     print(sorted_list2)
     with open(output_file_name, "a") as output_file:
         for item in sorted_list2:
@@ -41,7 +41,7 @@ def calculate_three_best(input_file_name, output_file_name):
             grades_int_list = [int(str_num) for str_num in grades_str_list]
 
             sorted_list.append([item[0], mean(grades_int_list)])
-    sorted_list2 = sorted(sorted_list, key=lambda x: x[1], reverse=True)
+    sorted_list2 = sorted(sorted_list, key=lambda x: (x[1], x[0]), reverse=True)
     three_best = sorted_list2[0:3]
 
     with open(output_file_name, "a") as output_file:
@@ -76,10 +76,12 @@ def calculate_average_of_averages(input_file_name, output_file_name):
             grades_str_list = item[1:]
             grades_int_list = [int(str_num) for str_num in grades_str_list]
             sorted_list.append(grades_int_list)
-    all_averages = [ mean(item) for item in sorted_list]        
-    print(mean(all_averages))
+    all_averages = [ mean(item) for item in sorted_list]     
+    with open(output_file_name, "a") as output_file:   
+        output_file.write(str(mean(all_averages)))
+
 # calculate_averages("grades.csv", "averages.csv")
 # calculate_sorted_averages("grades.csv", "sorted_average.csv")
 # calculate_three_best("grades.csv", "three_best_grades.csv")
 # calculate_three_worst("grades.csv", "three_worst_grades.csv")
-calculate_average_of_averages("grades.csv", "average_of_averages.csv")
+# calculate_average_of_averages("grades.csv", "average_of_averages.csv")
